@@ -1,0 +1,75 @@
+#----------------------------------------------------------------------------------
+#-- Company: 			Mid Sweden University
+#-- Engineer: 			Taiyelolu O. Adeboye (Student)
+#-- 
+#-- Create Date:    	14:56:46 02/06/2015 
+#-- Design Name: 		DFPM ON FPGA 
+#-- Module Name:    	DFPM_ON_FPGA_PROJECT_DEMO_TOP_MODULE - Behavioral 
+#-- Project Name: 		DFPM ON FPGA - An implementation of the Dynamic Functional Particle Method on Spartan 3E FPGA (Thesis work)
+#-- Target Devices: 	Xilinx's xc3s1200e-4fg320 - Spartan 3E on Nexys2 board
+#-- Tool versions: 	Xilinx ISE Project Navigator, Digilent's Adept (for programming) and other associated design, synthesis 
+#--							and verification tools
+#-- Description: 		This project is a thesis work, done in partial fulfilment of the requirements for the 
+#--							award of the degree of Bachelor in Electronics design in Mid Sweden University.
+#--							It is a design on Xilinx Spartan 3E FPGA using VHDL to implement the Dynamic Functional
+#--							Particle Method as invented by Prof. Sverker Edvardsson et al. 
+#--							
+#--							The complete and compiled design includes a UART module that facilitates the input of 
+#--							problem statements to be solved using the DFPM and the output of the solution 
+#--							in signed binary format. An accompanying MATLAB code is available for communicating
+#--							with the FPGA running this design.
+#--							
+#--							This thesis work was done under suprérvision of Asst. Prof. Kent Bertilsson and initial 
+#--							instructional guidance from Prof. Sverker.
+#--
+#-- Dependencies: 
+#--
+#-- Revision: 			I have lost count of the number of revisions. LOL. But let's say version 1.5 :-)
+#-- Revision 0.01 - File Created
+#-- Additional Comments: This specific file is an adaptation of Dan Pederson's design provided 
+#--								as a sample project for the UART on Nexys2
+#--
+
+## This file is a general .ucf for Nexys2 rev A board
+## To use it in a project:
+## - remove or comment the lines corresponding to unused pins
+## - rename the used signals according to the project
+
+## Clock pin for Nexys 2 Board
+NET "CLK"         LOC = "B8";      # Bank = 0, Pin name = IP_L13P_0/GCLK8, Type = GCLK,                  Sch name = GCLK0
+#NET "clk1"        LOC = "U9";      # Bank = 2, Pin name = IO_L13P_2/D4/GCLK14, Type = DUAL/GCLK,         Sch name = GCLK1
+
+## Leds
+NET "LEDS<0>"      LOC = "J14";     # Bank = 1, Pin name = IO_L14N_1/A3/RHCLK7, Type = RHCLK/DUAL,        Sch name = JD10/LD0
+NET "LEDS<1>"      LOC = "J15";     # Bank = 1, Pin name = IO_L14P_1/A4/RHCLK6, Type = RHCLK/DUAL,        Sch name = JD9/LD1
+NET "LEDS<2>"      LOC = "K15";     # Bank = 1, Pin name = IO_L12P_1/A8/RHCLK2, Type = RHCLK/DUAL,        Sch name = JD8/LD2
+NET "LEDS<3>"      LOC = "K14";     # Bank = 1, Pin name = IO_L12N_1/A7/RHCLK3/TRDY1, Type = RHCLK/DUAL,  Sch name = JD7/LD3
+#NET "Led<4>"      LOC = "E17";     # Bank = 1, Pin name = IO, Type = I/O,                                Sch name = LD4? s3e500 only
+#NET "Led<5>"      LOC = "P15";     # Bank = 1, Pin name = IO, Type = I/O,                                Sch name = LD5? s3e500 only
+#NET "Led<6>"      LOC = "F4";      # Bank = 3, Pin name = IO, Type = I/O,                                Sch name = LD6? s3e500 only
+#NET "Led<7>"      LOC = "R4";      # Bank = 3, Pin name = IO/VREF_3, Type = VREF,                        Sch name = LD7? s3e500 only
+NET "LEDS<4>"      LOC = "E16";     # Bank = 1, Pin name = N.C., Type = N.C.,                             Sch name = LD4? other than s3e500
+NET "LEDS<5>"      LOC = "P16";     # Bank = 1, Pin name = N.C., Type = N.C.,                             Sch name = LD5? other than s3e500
+NET "LEDS<6>"      LOC = "E4";      # Bank = 3, Pin name = N.C., Type = N.C.,                             Sch name = LD6? other than s3e500
+NET "LEDS<7>"      LOC = "P4";      # Bank = 3, Pin name = N.C., Type = N.C.,                             Sch name = LD7? other than s3e500
+
+## Switches
+#NET "SWITCHES_Top<0>"       LOC = "G18";   # Bank = 1, Pin name = IP, Type = INPUT,                             Sch name = SW0
+#NET "SWITCHES_Top<1>"       LOC = "H18";   # Bank = 1, Pin name = IP/VREF_1, Type = VREF,                       Sch name = SW1
+#NET "SWITCHES_Top<2>"       LOC = "K18";   # Bank = 1, Pin name = IP, Type = INPUT,                             Sch name = SW2
+#NET "SWITCHES_Top<3>"       LOC = "K17";   # Bank = 1, Pin name = IP, Type = INPUT,                             Sch name = SW3
+#NET "SWITCHES_Top<4>"       LOC = "L14";   # Bank = 1, Pin name = IP, Type = INPUT,                             Sch name = SW4
+#NET "SWITCHES_Top<5>"       LOC = "L13";   # Bank = 1, Pin name = IP, Type = INPUT,                             Sch name = SW5
+#NET "SWITCHES_Top<6>"       LOC = "N17";   # Bank = 1, Pin name = IP, Type = INPUT,                             Sch name = SW6
+#NET "SWITCHES_Top<7>"       LOC = "R17";   # Bank = 1, Pin name = IP, Type = INPUT,                             Sch name = SW7
+
+## Buttons
+NET "RST" 		CLOCK_DEDICATED_ROUTE = FALSE;
+NET "RST"      LOC = "B18";     # Bank = 1, Pin name = IP, Type = INPUT,                              Sch name = BTN0
+#NET "btn<1>"      LOC = "D18";     # Bank = 1, Pin name = IP/VREF_1, Type = VREF,                        Sch name = BTN1
+#NET "btn<2>"      LOC = "E18";     # Bank = 1, Pin name = IP, Type = INPUT,                              Sch name = BTN2
+#NET "BUTTON_3"      LOC = "H13";     # Bank = 1, Pin name = IP, Type = INPUT,                              Sch name = BTN3
+
+## RS232 connector
+NET "RXD"        LOC = "U6";      # Bank = 2, Pin name = IP, Type = INPUT,                              Sch name = RS-RX
+NET "TXD"        LOC = "P9";      # Bank = 2, Pin name = IO, Type = I/O,                                Sch name = RS-TX
